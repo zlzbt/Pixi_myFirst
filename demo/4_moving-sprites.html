@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动精灵</title>
+</head>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+
+<body>
+    <script>
+        let isBack = false;
+        const app = new Application({
+            width: 520,
+            height: 520,
+            antialias: true,
+            transparent: false,
+            resolution: 1
+        })
+        document.body.appendChild(app.view);
+
+        loader.add(_urls).load(loadingFinish)
+        
+        let sprite;
+
+        function loadingFinish() {
+            sprite = new Sprite(resources[_urls[0]].texture);
+            sprite.scale.set(0.5, 0.5)
+            app.stage.addChild(sprite);
+            //如果你的设备能够做到60帧/秒，帧与帧之间的间隔相差不大，就不用考虑delta。 若是你的设备运行较慢（代码计算量较大，也可能导致这种情况），不能满足60帧/秒，或者帧间隔相差较大，才会考虑delta，纠正显示效果。
+            app.ticker.add(delta => gameLoop(delta));
+        }
+
+        function gameLoop(delta) {
+            const maxWidth = 520 - sprite.width;
+            if(sprite.x === maxWidth){
+                isBack = true;
+            }else if(sprite.x === 0){
+                isBack = false;
+            }
+            if(!isBack){
+                sprite.x += 1;
+            }else{
+                sprite.x -= 1;
+            }
+        }
+    </script>
+</body>
+
+</html>

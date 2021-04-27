@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sprites（精灵）与stage（舞台）</title>
+</head>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+
+<body>
+
+</body>
+<script>
+    let app = new Application({
+        width: 400,
+        height: 400,
+        antialiasing: true,
+        transparent: false,
+        resolution: 1
+    });
+    document.body.appendChild(app.view);
+
+    /* let texture = PIXI.utils.TextureCache["../images/cat1.png"];
+    let sprite = new PIXI.Sprite(texture);
+    app.stage.addChild(sprite); */
+
+    loader
+        //调用一个add方法来加载数组中的图片
+        .add(_urls)
+        .on("progress", loadProgressHandler)
+        .load(loadingFinish);
+
+    // 每次加载一个文件时，progress事件就会被调用一次
+    function loadProgressHandler(loader, resource) {
+        console.log("loading: " + resource.url); 
+        console.log("progress: " + loader.progress + "%"); 
+    }
+
+    //加载完成回调
+    function loadingFinish() {
+        console.log("All files loaded");
+
+        // 创建一个精灵
+        let sprite = new Sprite(resources[_urls[0]].texture);
+
+        sprite.x = 50;  //定位 偏移左上角x方向
+        sprite.y = 50;  //定位 偏移左上角y方向
+
+        sprite.width = 100; //设置精灵宽度
+        sprite.height = 100; //设置精灵高度
+
+        sprite.scale.set(0.3, 0.3); //scale.set对精灵进行缩放 按顺序会覆盖上面的设置
+
+        sprite.rotation = 0.1; // 旋转精灵
+
+        // sprite.anchor.set(0.5, 0.5);  //更改精灵锚点位置  默认锚点就是精灵的左上角 也就是旋转中心的位置
+
+        // sprite.pivot.set(32, 32)  //pivot轴心点设置了精灵的原点。 改变一个精灵的原点，你也就改变了它的坐标
+
+        app.stage.addChild(sprite);
+        sprite.visible = true; //使精灵消失的一种更简单、更有效的方法
+    }
+
+</script>
+
+</html>
