@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用Pixi上的Application对象创建一个矩形显示区域</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0
+    }
+</style>
+<script src="../pixi/pixi.min.js"></script>
+<body>
+
+</body>
+<script type="text/javascript">
+    let app = new PIXI.Application({
+        width: 256, // default: 800 宽度
+        height: 256, // default: 600 高度
+        antialias: true, // default: false 使字体和图形边缘更加平滑
+        transparent: false, // default: false 使canvas背景透明
+        resolution: 1, // default: 1 分辨率
+        forceCanvas: true,  //Pixi的renderer对象将默认为WebGL 使用canvas绘图API，可以将forceCanvas选项设置为true
+    });
+    document.body.appendChild(app.view);
+
+    /*app.renderer 渲染后更改部分属性 START*/
+    
+    app.renderer.backgroundColor = 0x061639; // 更改背景色 设置为十六进制颜色值
+
+    console.log({width: app.renderer.view.width, height: app.renderer.view.height}) // 查看渲染器的宽度或高度
+    
+    app.renderer.autoResize = true; //确保画布的大小调整到与分辨率匹配 设置值为true
+    app.renderer.resize(512, 512);  //更改画布的大小
+
+    app.renderer.view.style.position = "absolute";
+    app.renderer.view.style.display = "block";
+    app.renderer.autoResize = true;
+    app.renderer.resize(window.innerWidth, window.innerHeight); //让canvas画布填充整个窗口
+
+    /*app.renderer 渲染后更改部分属性 END*/
+
+    
+</script>
+
+</html>

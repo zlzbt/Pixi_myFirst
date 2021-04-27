@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sprites（精灵）与stage（舞台）</title>
+</head>
+<script src="../pixi/pixi.js"></script>
+<!-- <script src="https://pixijs.download/v4.5.5/pixi.js"></script> -->
+<body>
+    
+</body>
+<script>
+    let Application = PIXI.Application,
+        loader = PIXI.loader,
+        resources = PIXI.loader.resources,
+        Sprite = PIXI.Sprite;
+
+    let app = new Application({
+        width: 256,
+        height: 256,
+        antialiasing: true,
+        transparent: false,
+        resolution: 1
+    });
+    document.body.appendChild(app.view);
+
+    /* let texture = PIXI.utils.TextureCache["../images/cat1.png"];
+    let sprite = new PIXI.Sprite(texture);
+    app.stage.addChild(sprite); */
+
+    loader
+        .add([  //调用一个add方法来加载数组中的图片
+            "../images/cat1.png"
+        ])
+        .load(setup);
+    function setup() {
+        // 创建一个精灵
+        let cat = new Sprite(resources["../images/cat1.png"].texture);
+        app.stage.addChild(cat);
+        // cat1.visible = false; //使精灵消失的一种更简单、更有效的方法
+        // app.stage.removeChild(cat1) //删除一个精灵
+    }
+
+</script>
+</html>
