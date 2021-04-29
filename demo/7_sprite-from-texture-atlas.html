@@ -8,11 +8,45 @@
     <title>使用纹理贴图集制作精灵</title>
 </head>
 <script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
 
 <body>
     <script type="text/javascript">
-        
+        const app = new Application({
+            width: 500,
+            height: 500
+        })
+        document.body.appendChild(app.view);
+
+        loader.add("../imgJson/treasureHunter.json").load(setup);
+
+        let dungeon, explorer, treasure, id;
+        function setup(){
+            //1. 直接访问“TextureCache”
+            let dungeonTexture = TextureCache["dungeon.png"];
+            dungeon = new Sprite(dungeonTexture);
+            app.stage.addChild(dungeon);
+
+            //2. 通过加载程序的“资源”访问纹理：
+            explorer = new Sprite(
+                resources["../imgJson/treasureHunter.json"].textures["explorer.png"]
+            );
+            explorer.x = 68;
+
+            //将资源管理器垂直居中
+            explorer.y = app.stage.height / 2 - explorer.height / 2;
+            app.stage.addChild(explorer);
+
+            // 3. 为所有纹理图集创建一个名为“id”的可选别名
+            id = resources["../imgJson/treasureHunter.json"].textures;
+            treasure = new Sprite(id["treasure.png"]);
+            app.stage.addChild(treasure);
+
+            treasure.x = app.stage.width - treasure.width - 48;
+            treasure.y = app.stage.height / 2 - treasure.height / 2;
+            app.stage.addChild(treasure);
+        }
     </script>
 </body>
 
-</html>
+</html> 
