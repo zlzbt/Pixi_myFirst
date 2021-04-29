@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏状态</title>
+</head>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+
+<body>
+    <script>
+        let isMoveRight = true; // 是否右移动
+        let isMoveDown = true; // 是否往下移动
+        const app = new Application({
+            width: 520,
+            height: 520
+        })
+        document.body.appendChild(app.view);
+
+        loader.add(_urls).load(loadingFinish)
+
+        let sprite, state;
+
+        function loadingFinish() {
+            sprite = new Sprite(resources[_urls[1]].texture);
+            sprite.scale.set(0.5, 0.5)
+            app.stage.addChild(sprite);
+
+            // 保存游戏状态
+            state = play;
+            console.log(state);
+
+            //如果你的设备能够做到60帧/秒，帧与帧之间的间隔相差不大，就不用考虑delta。 若是你的设备运行较慢（代码计算量较大，也可能导致这种情况），不能满足60帧/秒，或者帧间隔相差较大，才会考虑delta，纠正显示效果。
+            app.ticker.add(delta => gameLoop(delta));
+        }
+
+        function gameLoop(delta) {
+            state(delta);
+        }
+
+
+        function play(delta) {
+            //sprite.vx  sprite.vy 数值越大 移动速度越快
+            sprite.vx = 1;
+            sprite.vy = 2;
+            const maxWidth = 520 - sprite.width;
+            const maxHeight = 520 - sprite.height;
+            if (sprite.x >= maxWidth) {
+                isMoveRight = false;
+            } else if (sprite.x <= 0) {
+                isMoveRight = true;
+            }
+
+            if (sprite.y >= maxHeight) {
+                isMoveDown = false
+            } else if (sprite.y <= 0) {
+                isMoveDown = true;
+            }
+            if (isMoveRight) {
+                // sprite.x += 1;
+                sprite.x += sprite.vx;
+                // sprite.y += sprite.vy;
+            } else {
+                // sprite.x -= 1;
+                sprite.x -= sprite.vx;
+                // sprite.y -= sprite.vy;
+            }
+            if (isMoveDown) {
+                // sprite.x += 1;
+                sprite.y += sprite.vy;
+            } else {
+                // sprite.x -= 1;
+                sprite.y -= sprite.vy;
+            }
+        }
+    </script>
+</body>
+
+</html>

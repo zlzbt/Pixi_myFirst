@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>键盘移动</title>
+</head>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+
+<body>
+    <script>
+        const app = new Application({
+            width: 500,
+            height: 500
+        })
+        document.body.appendChild(app.view);
+
+        loader.add("../images/cat.png").load(setup)
+
+        function setup() {
+            cat = new Sprite(resources["../images/cat.png"].texture);
+            cat.y = 96;
+            cat.vx = 0;
+            cat.vy = 0;
+            app.stage.addChild(cat);
+            // 捕捉键盘箭头键
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+            left.press = () => {
+                cat.vx = -5;
+                cat.vy = 0;
+            };
+            left.release = () => {
+                if (!right.isDown && cat.vy === 0) {
+                    cat.vx = 0;
+                }
+            };
+
+            //Up
+            up.press = () => {
+                cat.vy = -5;
+                cat.vx = 0;
+            };
+            up.release = () => {
+                if (!down.isDown && cat.vx === 0) {
+                    cat.vy = 0;
+                }
+            };
+
+            //Right
+            right.press = () => {
+                cat.vx = 5;
+                cat.vy = 0;
+            };
+            right.release = () => {
+                if (!left.isDown && cat.vy === 0) {
+                    cat.vx = 0;
+                }
+            };
+
+            //Down
+            down.press = () => {
+                cat.vy = 5;
+                cat.vx = 0;
+            };
+            down.release = () => {
+                if (!up.isDown && cat.vx === 0) {
+                    cat.vy = 0;
+                }
+            };
+
+            state = play;
+
+            app.ticker.add(delta => gameLoop(delta));
+        }
+
+        function gameLoop(delta) {
+            state(delta);
+        }
+
+        function play(delta) {
+            cat.x += cat.vx;
+            cat.y += cat.vy
+        }
+    </script>
+</body>
+
+</html>
