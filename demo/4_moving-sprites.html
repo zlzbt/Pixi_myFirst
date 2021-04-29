@@ -12,7 +12,8 @@
 
 <body>
     <script>
-        let isBack = false;
+        let isMoveRight = true; // 是否右移动
+        let isMoveDown = true; // 是否往下移动
         const app = new Application({
             width: 520,
             height: 520
@@ -24,7 +25,7 @@
         let sprite;
 
         function loadingFinish() {
-            sprite = new Sprite(resources[_urls[0]].texture);
+            sprite = new Sprite(resources[_urls[1]].texture);
             sprite.scale.set(0.5, 0.5)
             app.stage.addChild(sprite);
             //如果你的设备能够做到60帧/秒，帧与帧之间的间隔相差不大，就不用考虑delta。 若是你的设备运行较慢（代码计算量较大，也可能导致这种情况），不能满足60帧/秒，或者帧间隔相差较大，才会考虑delta，纠正显示效果。
@@ -32,17 +33,39 @@
         }
 
         function gameLoop(delta) {
+            //sprite.vx  sprite.vy 数值越大 移动速度越快
+            sprite.vx = 1;
+            sprite.vy = 2;
             const maxWidth = 520 - sprite.width;
-            if(sprite.x === maxWidth){
-                isBack = true;
-            }else if(sprite.x === 0){
-                isBack = false;
+            const maxHeight = 520 - sprite.height;
+            if(sprite.x >= maxWidth ){
+                isMoveRight = false;
+            }else if(sprite.x <= 0){
+                isMoveRight = true;
             }
-            if(!isBack){
-                sprite.x += 1;
+
+            if(sprite.y >= maxHeight){
+                isMoveDown = false
+            }else if(sprite.y <= 0){
+                isMoveDown = true;
+            }
+            if(isMoveRight){
+                // sprite.x += 1;
+                sprite.x += sprite.vx;
+                // sprite.y += sprite.vy;
             }else{
-                sprite.x -= 1;
+                // sprite.x -= 1;
+                sprite.x -= sprite.vx;
+                // sprite.y -= sprite.vy;
             }
+            if(isMoveDown){
+                // sprite.x += 1;
+                sprite.y += sprite.vy;
+            }else{
+                // sprite.x -= 1;
+                sprite.y -= sprite.vy;
+            }
+            
         }
     </script>
 </body>
