@@ -29,7 +29,7 @@
 
     loader
         //调用一个add方法来加载数组中的图片
-        .add(_urls)
+        .add('../images/cat.png')
         .on("progress", loadProgressHandler)
         .load(loadingFinish);
 
@@ -44,7 +44,7 @@
         console.log("All files loaded");
 
         // 创建一个精灵
-        let sprite = new Sprite(resources[_urls[0]].texture);
+        let sprite = new Sprite(resources['../images/cat.png'].texture);
 
         sprite.x = 50;  //定位 偏移左上角x方向
         sprite.y = 50;  //定位 偏移左上角y方向

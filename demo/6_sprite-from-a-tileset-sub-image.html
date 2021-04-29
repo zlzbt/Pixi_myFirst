@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用雪碧图制作精灵</title>
+</head>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+<body>
+    <script>
+        const app = new Application({
+            width: 300,
+            height: 300
+        })
+
+        document.body.appendChild(app.view);
+
+        loader.add(_urls).load(setup);
+        function setup(){
+            let texture = TextureCache[_urls[6]];
+            let rectangle = new Rectangle(96, 64, 32, 32);
+            texture.frame = rectangle;
+
+            //从纹理创建精灵
+            let rocket = new Sprite(texture);
+
+            //将火箭雪碧放在画布上
+            rocket.x = 32;
+            rocket.y = 32;
+
+            //把火箭加到舞台上
+            app.stage.addChild(rocket);
+
+            //渲染舞台
+            app.renderer.render(app.stage);
+        }
+        
+    </script>
+</body>
+</html>

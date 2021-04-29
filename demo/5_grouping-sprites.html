@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精灵分组</title>
+</head>
+<style>
+    * {
+        margin: auto;
+        /* margin-left: 10%; */
+
+    }
+</style>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+
+<body>
+    <script>
+        const app = new Application({
+            width: 400,
+            height: 400,
+        })
+        document.body.appendChild(app.view);
+
+        loader.add(_urls).load(loadingFinish)
+
+        function loadingFinish() {
+            let sprite1 = new Sprite(resources[_urls[1]].texture);
+            sprite1.scale.set(0.1, 0.1)
+            sprite1.position.set(25, 25);
+            console.log('sprite1的x偏移', sprite1.x);
+
+            let sprite2 = new Sprite(resources[_urls[2]].texture);
+            sprite2.scale.set(0.1, 0.1)
+            sprite2.position.set(128, 128);
+            // 查看精灵的局部坐标
+            console.log('sprite2的x偏移', sprite2.x);
+
+            let sprite3 = new Sprite(resources[_urls[3]].texture);
+            sprite3.scale.set(0.1, 0.1)
+            sprite3.position.set(130, 128);
+
+            let container = new Container();
+            let container2 = new Container();
+            container.addChild(sprite1);
+            container.addChild(sprite3);
+            console.log(container.children);
+            // container.position.set(-50, -50);
+
+            // 查看精灵的全局坐标
+            console.log("sprite2的全局坐标", container2.toGlobal(sprite2.position));
+
+            // 如果不知道父容器的话想要查看精灵的坐标的方法
+            console.log('sprite1的全局坐标', sprite1.getGlobalPosition().x);
+
+            // toLocal查看精灵和其他精灵之间的距离。
+            console.log('sprite1和sprite3之间的距离', sprite1.toLocal(sprite1.position, sprite3).x, sprite1.toLocal(sprite1
+                .position, sprite3).y);
+
+            console.log('容器宽度：', container.width);
+            console.log('容器高度：', container.height);
+
+            container2.addChild(sprite2);
+            app.stage.addChild(container);
+            app.stage.addChild(container2);
+
+        }
+    </script>
+</body>
+
+</html>
