@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>键盘移动</title>
+    <title>碰撞检测</title>
 </head>
 <script src="../pixi/pixi.min.js"></script>
 <script src="../util/util.js"></script>
@@ -15,12 +15,23 @@
         const app = new Application({
             width: 500,
             height: 500
-        })
+        });
+        app.renderer.backgroundColor = 0xcccccc;
         document.body.appendChild(app.view);
 
-        loader.add("../images/cat.png").load(setup)
+        loader.add('../images/cat.png').load(setup);
 
         let cat;
+        let message = new PIXI.Text('No collision...');
+        app.stage.addChild(message);
+
+        let box = new PIXI.Graphics();
+        box.beginFill(0xbe14807f);
+        box.drawRect(1, 2 , 50, 50);
+        box.endFill();
+        box.x = 196;
+        box.y = 196;
+        app.stage.addChild(box);
         function setup() {
             cat = new Sprite(resources["../images/cat.png"].texture);
             cat.y = 96;
@@ -86,7 +97,15 @@
 
         function play(delta) {
             cat.x += cat.vx;
-            cat.y += cat.vy
+            cat.y += cat.vy;
+            if (hitTestRectangle(cat, box)) {
+                message.text = "hit!";
+                box.tint = 0xff3300;
+
+            } else {
+                message.text = "No collision...";
+                box.tint = 0xccff99;
+            }
         }
     </script>
 </body>

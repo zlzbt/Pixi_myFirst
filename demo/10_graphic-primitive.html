@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图形绘制</title>
+</head>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+<body>
+    <script>
+        const app = new Application({
+            width: 400, height: 400
+        });
+        app.renderer.backgroundColor = 0xDC143C;
+        document.body.appendChild(app.view);
+
+        let rectangle = new PIXI.Graphics();  //绘制矩形 *.drawRect(x, y , width, height)
+        rectangle.beginFill(0x66CCFF);  //调用beginFill方法，给它传入一个16进制的颜色参数来设置矩形的填充颜色
+        /* lineStyle 绘制要在 drawRect 前面，不然不会生效*/
+        rectangle.lineStyle(4,0xFF3300, 1);  //调用ineStyle给形状一个外边框 4 像素宽的 红色 轮廓，透明度alpha设为1。
+        rectangle.drawRect(1, 2 , 20, 25); //使用drawRect方法绘制矩形 drawRect(x, y , width, height);
+        rectangle.endFill();
+        rectangle.x = 170;
+        rectangle.y = 170;
+        app.stage.addChild(rectangle);
+
+        let circle = new PIXI.Graphics();  //绘制圆形 *.drawCircle(x, y, radius)
+        circle.beginFill(0X9966FF);
+        /* lineStyle 绘制要在 drawCircle 前面，不然不会生效 */
+        // circle.lineStyle(2,0xFF3300, 1)
+        circle.drawCircle(0,0,32); //drawCircle方法用来绘制圆形，它有3个参数，分别是x、y、半径radius
+        circle.endFill();
+        circle.x = 64;
+        circle.y = 130;
+        app.stage.addChild(circle);
+
+        let ellips = new PIXI.Graphics();  //绘制椭圆 drawEllipse(x, y, width, height);
+        ellips.beginFill(0xFFFF00);
+        ellips.drawEllipse(0, 0, 50, 20);
+        ellips.endFill();
+        ellips.x = 180;
+        ellips.y = 130;
+        app.stage.addChild(ellips);
+
+        let roundBox = new PIXI.Graphics();  //绘制圆角矩形 *.drawRoundedRect(x,y,width,height,cornerRadius)
+        roundBox.lineStyle(4, 0X99CCFF, 1);
+        roundBox.beginFill(0xFF9933);
+        roundBox.drawRoundedRect(0,0,84,36,10);  //绘制一个圆角半径为10像素的矩形。
+        roundBox.endFill();
+        roundBox.x = 48;
+        roundBox.y = 190;
+        app.stage.addChild(roundBox);
+
+        let line = new PIXI.Graphics();  //绘制线 lineStyle方法使您可以定义线的样式 使用moveTo和lineTo方法绘制线的起点和终点
+        line.lineStyle(4, 0xFFFFFF, 1);
+        line.moveTo(0, 0);
+        line.lineTo(80, 50);
+        line.x = 32;
+        line.y = 32;
+        app.stage.addChild(line);
+
+        let triangle = new PIXI.Graphics();// 绘制多边形
+        triangle.beginFill(0x66ff33);
+        
+        /* let path = [
+            point1X, point1Y,
+            point2X, point2Y,
+            point3X, point3Y
+        ];
+        triangle.drawPolygon(path); */
+        triangle.drawPolygon([
+            -32,64, //First point
+            32,64,  //Second point
+            0,0,    //Third point
+        ]);
+        triangle.endFill();
+        triangle.x = 180;
+        triangle.y = 22;
+        app.stage.addChild(triangle);
+
+        let style = new PIXI.TextStyle({
+            fontFamily: "Arial",
+            fontSize: 36,
+            fill: "white",
+            stroke: '#ff3300',
+            strokeThickness: 4,
+            dropShadow: true,
+            dropShadowColor: "#000000",
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 6,
+            wordWrap: true, //wordWrap设置为true 超长字符串换行  默认是false
+            wordWrapWidth: 100,  //这个最大宽度像素值。
+            align: 'center'  //设置多行文本的对齐方式
+        });
+        let message = new PIXI.Text("Hello Pixi!", style);  //加上style 更改默认样式  非必填
+        message.position.set(54, 96);
+        app.stage.addChild(message);
+        message.text = "Text changed!";
+        // message.style = {fill: "black", font: "16px PetMe64"};  // 改变样式
+
+    </script>
+</body>
+</html>
