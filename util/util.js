@@ -3,8 +3,8 @@ let Application = PIXI.Application, //new PIXI.Application() 创建一个矩形�
   loader = PIXI.loader, //loader（加载器）对象可以加载任何类型的图像
   resources = PIXI.loader.resources, //通过引用loader的resources对象中的纹理来创建精灵  例子：PIXI.loader.resources["images/anyImage.png"].texture
   Rectangle = PIXI.Rectangle, //new PIXI.Rectangle(x, y, width, height) 创建一个矩形对象，该对象定义要从纹理中提取的子图像的位置和大小
-  TextureCache = PIXI.TextureCache; //PIXI.TextureCache(['imgUrl']) 也可以从纹理创建 精灵
-Sprite = PIXI.Sprite; //new PIXI.Sprite()  创建一个精灵
+  TextureCache = PIXI.TextureCache, //PIXI.TextureCache(['imgUrl']) 也可以从纹理创建 精灵
+  Sprite = PIXI.Sprite; //new PIXI.Sprite()  创建一个精灵
 // superFastSprites = PIXI.particles.ParticleContainer;  //粒子容器ParticleContainer对精灵进行分组
 
 const _urls = [
@@ -104,3 +104,90 @@ function hitTestRectangle(r1, r2) {
   //`hit` will be either `true` or `false`
   return hit;
 };
+
+// 限制精灵的移动范围
+function contain(sprite, container) {
+
+  let collision = undefined;
+
+  //Left
+  if (sprite.x < container.x) {
+    sprite.x = container.x;
+    collision = "left";
+  }
+
+  //Top
+  if (sprite.y < container.y) {
+    sprite.y = container.y;
+    collision = "top";
+  }
+
+  //Right
+  if (sprite.x + sprite.width > container.width) {
+    sprite.x = container.width - sprite.width;
+    collision = "right";
+  }
+
+  //Bottom
+  if (sprite.y + sprite.height > container.height) {
+    sprite.y = container.height - sprite.height;
+    collision = "bottom";
+  }
+
+  //Return the `collision` value
+  return collision;
+}
+
+function keyboardMove(sprite) {
+  // 捕捉键盘箭头键
+  let left = keyboard(37),
+    up = keyboard(38),
+    right = keyboard(39),
+    down = keyboard(40);
+  left.press = () => {
+    sprite.vx = -5;
+    sprite.vy = 0;
+  };
+  left.release = () => {
+    if (!right.isDown && sprite.vy === 0) {
+      sprite.vx = 0;
+    }
+  };
+
+  //Up
+  up.press = () => {
+    sprite.vy = -5;
+    sprite.vx = 0;
+  };
+  up.release = () => {
+    if (!down.isDown && sprite.vx === 0) {
+      sprite.vy = 0;
+    }
+  };
+
+  //Right
+  right.press = () => {
+    sprite.vx = 5;
+    sprite.vy = 0;
+  };
+  right.release = () => {
+    if (!left.isDown && sprite.vy === 0) {
+      sprite.vx = 0;
+    }
+  };
+
+  //Down
+  down.press = () => {
+    sprite.vy = 5;
+    sprite.vx = 0;
+  };
+  down.release = () => {
+    if (!up.isDown && sprite.vx === 0) {
+      sprite.vy = 0;
+    }
+  };
+}
+
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

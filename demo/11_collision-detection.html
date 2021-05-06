@@ -21,7 +21,7 @@
 
         loader.add('../images/cat.png').load(setup);
 
-        let cat;
+        let cat, state;
         let message = new PIXI.Text('No collision...');
         app.stage.addChild(message);
 
@@ -38,53 +38,7 @@
             cat.vx = 0;
             cat.vy = 0;
             app.stage.addChild(cat);
-            // 捕捉键盘箭头键
-            let left = keyboard(37),
-                up = keyboard(38),
-                right = keyboard(39),
-                down = keyboard(40);
-            left.press = () => {
-                cat.vx = -5;
-                cat.vy = 0;
-            };
-            left.release = () => {
-                if (!right.isDown && cat.vy === 0) {
-                    cat.vx = 0;
-                }
-            };
-
-            //Up
-            up.press = () => {
-                cat.vy = -5;
-                cat.vx = 0;
-            };
-            up.release = () => {
-                if (!down.isDown && cat.vx === 0) {
-                    cat.vy = 0;
-                }
-            };
-
-            //Right
-            right.press = () => {
-                cat.vx = 5;
-                cat.vy = 0;
-            };
-            right.release = () => {
-                if (!left.isDown && cat.vy === 0) {
-                    cat.vx = 0;
-                }
-            };
-
-            //Down
-            down.press = () => {
-                cat.vy = 5;
-                cat.vx = 0;
-            };
-            down.release = () => {
-                if (!up.isDown && cat.vx === 0) {
-                    cat.vy = 0;
-                }
-            };
+            keyboardMove(cat);
 
             state = play;
 

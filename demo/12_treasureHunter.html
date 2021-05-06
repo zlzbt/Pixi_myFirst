@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏-寻宝猎人</title>
+</head>
+<script src="../pixi/pixi.min.js"></script>
+<script src="../util/util.js"></script>
+
+<body>
+    <script>
+        const app = new Application({
+            width: 510,
+            height: 505
+        });
+        app.renderer.backgroundColor = 0xccccc
+        document.body.appendChild(app.view);
+
+        const images = ['../images/dungeon.png', '../images/explorer.png', '../images/treasure.png',
+            '../images/blob.png', '../images/door.png',
+        ]
+        loader.add(images).load(setup);
+
+        let gameScene, gameOverScene
+        let explorer, treasure, dungeon, door, state, message, healthBar, explorerHit;
+
+        // 加载纹理图集图像后，setup即会运行，它仅运行一次。在setup函数中初始化游戏
+        function setup() {
+            gameScene = new Container(); //创建容器
+            app.stage.addChild(gameScene); //将容器添加到舞台上
+
+            gameOverScene = new Container(); //创建容器
+            gameOverScene.visible = false;
+            app.stage.addChild(gameOverScene); //将容器添加到舞台上
+
+            dungeon = new Sprite(resources[images[0]].texture);
+            dungeon.x = 0;
+            gameScene.addChild(dungeon);
+
+            generateMonsters(); //创建移动障碍怪物
+
+            treasure = new Sprite(resources[images[2]].texture);
+            treasure.x = 450;
+            treasure.y = 200;
+            gameScene.addChild(treasure);
+
+            makingLifeBar(); //生命条
+            messageText(); //游戏提示文本
+
+            door = new Sprite(resources[images[4]].texture);
+            door.position.set(32, 0);
+            gameScene.addChild(door);
+
+            explorer = new Sprite(resources[images[1]].texture);
+            explorer.y = 100;
+            explorer.vx = 0;
+            explorer.vy = 0;
+            gameScene.addChild(explorer);
+            keyboardMove(explorer);
+            state = play;
+            app.ticker.add(delta => gameLoop(delta));
+        }
+
+        function gameLoop(delta) {
+            state(delta);
+        }
+
+        function play() {
+            explorer.x += explorer.vx;
+            explorer.y += explorer.vy;
+            contain(explorer, {
+                x: 28,
+                y: 10,
+                width: 488,
+                height: 480
+            });
+            explorerHit = false;
+            moveBlobs(explorerHit); //移动怪物
+            if (explorerHit) {
+                //使explorer半透明
+                explorer.alpha = 0.5;
+                healthBar.outer.width -= 1;
+            } else {
+                explorer.alpha = 1;
+            }
+            if (hitTestRectangle(explorer, treasure)) {
+                treasure.x = explorer.x + 8;
+                treasure.y = explorer.y + 8;
+            }
+
+            if (healthBar.outer.width < 0) {
+                state = end;
+                message.text = "You lost!";
+            }
+            if (hitTestRectangle(treasure,door)) {
+                state = end;
+                message.text = "You won!";
+            }
+        }
+
+        function end() {
+            gameScene.visible = false;
+            gameOverScene.visible = true;
+        }
+
+        function makingLifeBar() {
+            //Create the health bar
+            healthBar = new PIXI.Container();
+            healthBar.position.set(app.stage.width - 170, 4)
+            gameScene.addChild(healthBar);
+
+            //Create the black background rectangle
+            let innerBar = new PIXI.Graphics();
+            innerBar.beginFill(0x000000);
+            innerBar.drawRect(0, 0, 128, 8);
+            innerBar.endFill();
+            healthBar.addChild(innerBar);
+
+            //Create the front red rectangle
+            let outerBar = new PIXI.Graphics();
+            outerBar.beginFill(0xFF3300);
+            outerBar.drawRect(0, 0, 128, 8);
+            outerBar.endFill();
+            healthBar.addChild(outerBar);
+
+            healthBar.outer = outerBar;
+
+            // 您可以看到一个名为outer的属性已添加到healthBar。 它仅引用outerBar（ 红色矩形）， 以便以后方便使用。 比如， 修改它的width， 这样做简洁易读。
+            // healthBar.outer = outerBar;
+            // healthBar.outer.width = 30;
+        }
+
+        function messageText() {
+            let style = new PIXI.TextStyle({
+                fontFamily: "Futura",
+                fontSize: 64,
+                fill: "white"
+            });
+            message = new PIXI.Text("The End!", style);
+            message.x = 120;
+            message.y = app.stage.height / 2 - 32;
+            gameOverScene.addChild(message);
+        }
+
+        // 生成怪物
+        function generateMonsters() {
+            let numberOfBlobs = 6,
+                spacing = 48,
+                xOffset = 150,
+                speed = 2,
+                direction = 1;
+
+            //一个存储所有斑点怪物的阵列
+            blobs = [];
+            //创建尽可能多的blob
+            for (let i = 0; i < numberOfBlobs; i++) {
+                let blob = new Sprite(resources[images[3]].texture);
+
+                //根据“spacing”值水平分隔每个blob。
+                //`xOffset` 确定屏幕左侧的点
+                //在其中添加第一个blob
+                let x = spacing * i + xOffset;
+
+                //给blob一个随机的y位置
+                let y = randomInt(0, app.stage.height - blob.height);
+
+                //设置blob的位置
+                blob.x = x;
+                blob.y = y;
+
+                //设置水滴的垂直速度`方向`将是` 1`或-1
+                //`1` 将下移  `-1` 将上移  垂直方向
+                blob.vy = speed * direction;
+
+                //反转下一个水滴的方向
+                direction *= -1;
+
+                blobs.push(blob);
+                gameScene.addChild(blob);
+            }
+        }
+
+        function moveBlobs() {
+            blobs.forEach(function (blob) {
+                //移动怪物
+                blob.y += blob.vy;
+                //检查blob的屏幕边界
+                let blobHitsWall = contain(blob, {
+                    x: 28,
+                    y: 10,
+                    width: 488,
+                    height: 480
+                });
+                //如果blob碰到舞台的顶部或底部，则反转其方向
+                if (blobHitsWall === "top" || blobHitsWall === "bottom") {
+                    blob.vy *= -1;
+                }
+                //测试碰撞。如果任何敌人正在触摸探险家，请将“explorerHit”设置为'true
+                if (hitTestRectangle(explorer, blob)) {
+                    explorerHit = true;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
