@@ -1,0 +1,140 @@
+{"frames": {
+
+"animals.png":
+{
+	"frame": {"x":1,"y":1639,"w":198,"h":66},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":198,"h":66},
+	"sourceSize": {"w":200,"h":68}
+},
+"blob.png":
+{
+	"frame": {"x":69,"y":1739,"w":32,"h":24},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":24},
+	"sourceSize": {"w":32,"h":24}
+},
+"cat.png":
+{
+	"frame": {"x":69,"y":1639,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+	"sourceSize": {"w":64,"h":64}
+},
+"cat1.png":
+{
+	"frame": {"x":1,"y":1,"w":887,"h":888},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":887,"h":888},
+	"sourceSize": {"w":887,"h":888}
+},
+"door.png":
+{
+	"frame": {"x":69,"y":1705,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"Doraemon1.jpg":
+{
+	"frame": {"x":643,"y":891,"w":500,"h":592},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":500,"h":592},
+	"sourceSize": {"w":500,"h":592}
+},
+"Doraemon2.jpg":
+{
+	"frame": {"x":1,"y":891,"w":640,"h":746},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":640,"h":746},
+	"sourceSize": {"w":640,"h":746}
+},
+"Doraemon3.jpg":
+{
+	"frame": {"x":1406,"y":1,"w":419,"h":462},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":419,"h":462},
+	"sourceSize": {"w":419,"h":462}
+},
+"Doraemon4.jpg":
+{
+	"frame": {"x":890,"y":551,"w":224,"h":336},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":224,"h":336},
+	"sourceSize": {"w":224,"h":336}
+},
+"Doraemon5.jpg":
+{
+	"frame": {"x":1145,"y":1350,"w":500,"h":500},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":500,"h":500},
+	"sourceSize": {"w":500,"h":500}
+},
+"Doraemon6.jpg":
+{
+	"frame": {"x":643,"y":1485,"w":500,"h":352},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":500,"h":352},
+	"sourceSize": {"w":500,"h":352}
+},
+"dungeon.png":
+{
+	"frame": {"x":1145,"y":836,"w":512,"h":512},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":512,"h":512},
+	"sourceSize": {"w":512,"h":512}
+},
+"explorer.png":
+{
+	"frame": {"x":69,"y":1773,"w":21,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":21,"h":32},
+	"sourceSize": {"w":21,"h":32}
+},
+"tileset.png":
+{
+	"frame": {"x":1406,"y":465,"w":369,"h":384},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":369,"h":384},
+	"sourceSize": {"w":384,"h":384}
+},
+"treasure.png":
+{
+	"frame": {"x":69,"y":1807,"w":28,"h":24},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":24},
+	"sourceSize": {"w":28,"h":24}
+},
+"treasureHunter.png":
+{
+	"frame": {"x":890,"y":1,"w":514,"h":548},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":514,"h":548},
+	"sourceSize": {"w":516,"h":550}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "spritesheet.png",
+	"format": "RGBA8888",
+	"size": {"w":1826,"h":1851},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:83efa77e6e1d2bc076ff9952b331c063:fdb887b76fcea61869bbb5561b533636:729adc6043343cfda41c447ce8f464d6$"
+}
+}

@@ -23,13 +23,13 @@
     });
     document.body.appendChild(app.view);
 
-    /* let texture = PIXI.utils.TextureCache["../images/cat1.png"];
+    /* let texture = PIXI.utils.TextureCache["../assets/resources/cat1.png"];
     let sprite = new PIXI.Sprite(texture);
     app.stage.addChild(sprite); */
 
     loader
         //调用一个add方法来加载数组中的图片
-        .add('../images/cat.png')
+        .add('../assets/resources/cat.png')
         .on("progress", loadProgressHandler)
         .load(loadingFinish);
 
@@ -44,7 +44,7 @@
         console.log("All files loaded");
 
         // 创建一个精灵
-        let sprite = new Sprite(resources['../images/cat.png'].texture);
+        let sprite = new Sprite(resources['../assets/resources/cat.png'].texture);
 
         sprite.x = 50;  //定位 偏移左上角x方向
         sprite.y = 50;  //定位 偏移左上角y方向

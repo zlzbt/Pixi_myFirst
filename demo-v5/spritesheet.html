@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雪碧图</title>
+</head>
+<script src="../pixi/pixi-v5.js"></script>
+
+<body>
+    <script>
+        const app = new PIXI.Application({
+            width: 400,
+            height: 400
+        })
+        document.body.appendChild(app.view);
+
+        const loader = PIXI.Loader.shared;
+        // resources -> PIXI.Loader.shared.resources
+        loader.add('../assets/spritesheet.json')/* .load((l, resources) => {
+            const sprite = new PIXI.Sprite(resources['../assets/spritesheet.json'].textures['explorer.png'])
+            app.stage.addChild(sprite);
+        }) */
+        loader.onProgress.add(res => {
+            console.log("开始加载一个资源")
+        });
+        // 加载出错
+        loader.onError.add(res => {
+            console.log("加载出错")
+        });
+        // 加载完成
+        loader.onLoad.add(res => {
+            console.log("加载完成一个资源")
+        });
+        // 完成所有加载
+        loader.onComplete.add(res => {
+            console.log("完成所有资源加载")
+        });
+        loader.load((l, resources) => {
+            console.log(l)
+            const sprite = new PIXI.Sprite(resources['../assets/spritesheet.json'].textures['explorer.png'])
+            app.stage.addChild(sprite);
+        })
+    </script>
+</body>
+
+</html>

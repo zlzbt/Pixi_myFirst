@@ -18,11 +18,11 @@
         })
         document.body.appendChild(app.view);
 
-        loader.add("../images/cat.png").load(setup)
+        loader.add("../assets/resources/cat.png").load(setup)
 
         let cat;
         function setup() {
-            cat = new Sprite(resources["../images/cat.png"].texture);
+            cat = new Sprite(resources["../assets/resources/cat.png"].texture);
             cat.y = 96;
             cat.vx = 0;
             cat.vy = 0;
