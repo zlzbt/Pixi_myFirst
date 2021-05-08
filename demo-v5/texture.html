@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雪碧图</title>
+</head>
+<script src="../pixi/pixi-v5.js"></script>
+
+<body>
+    <script>
+        const app = new PIXI.Application({
+            width: 400,
+            height: 400
+        })
+        document.body.appendChild(app.view)
+        var renderer = PIXI.autoDetectRenderer(400, 300);
+        var texture = PIXI.Texture.from("../assets/resources/door.png");
+        var sprite = new PIXI.Sprite(texture); //由材质创建
+        app.stage.addChild(sprite);
+        debugger;
+
+        PIXI.Loader.shared.add("assets/spritesheet.json").load(setup);
+
+        function setup() {
+            let sheet = PIXI.Loader.shared.resources["assets/spritesheet.json"].spritesheet;
+            animatedSprite = new PIXI.AnimatedSprite(sheet.animations["image_sequence"]);
+        }
+    </script>
+</body>
+
+</html>

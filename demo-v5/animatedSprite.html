@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雪碧图</title>
+</head>
+<script src="../pixi/pixi-v5.js"></script>
+
+<body>
+    <script>
+        const app = new PIXI.Application({
+            width: 900,
+            height: 900
+        })
+        document.body.appendChild(app.view);
+
+        const loader = PIXI.Loader.shared;
+
+        // PIXI.utils.clearTextureCache();  //清除缓存
+        // loader.add('../assets/spritesheet.json').load(setup);
+
+        function setup() {
+            let sheet = loader.resources["../assets/spritesheet.json"].spritesheet;
+            const animatedSprite = new PIXI.AnimatedSprite(sheet.animations);
+            app.stage.addChild(animatedSprite);
+        }
+
+        let alienImages = [
+            "../assets/resources/blob.png",
+            "../assets/resources/Doraemon2.jpg",
+            "../assets/resources/Doraemon3.jpg"
+        ];
+        let textureArray = [];
+
+        for (let i = 0; i < alienImages.length; i++) {
+            let texture = PIXI.Texture.from(alienImages[i]);
+            textureArray.push(texture);
+        };
+        let animatedSprite = new PIXI.AnimatedSprite(textureArray);
+        const time = parseFloat((20 / 1000).toFixed(2))
+        animatedSprite.animationSpeed = time;  //设置播放速度  值越大播放速度越快
+        animatedSprite.play();  //播放动画
+        app.stage.addChild(animatedSprite);
+    </script>
+</body>
+
+</html>
